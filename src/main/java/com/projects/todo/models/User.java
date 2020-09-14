@@ -1,16 +1,23 @@
 package com.projects.todo.models;
 
-import java.util.ArrayList;
+import javax.persistence.*;
 
+@Entity
 public class User {
 
-    protected Long ID;
-    protected String name;
-    protected ArrayList<String> list;
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Long ID;
+    @Column(unique = true, length = 20)
+    private String username;
+    private String password;
 
-    public User(String name) {
-        this.name = name;
-        this.list = new ArrayList<String>();
+    public User() {
+    }
+
+    public User(String username, String password) {
+        this.username = username;
+        this.password = password;
     }
 
     public Long getID() {
@@ -21,15 +28,19 @@ public class User {
         this.ID = ID;
     }
 
-    public String getName() {
-        return name;
+    public String getUsername() {
+        return username;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setUsername(String username) {
+        this.username = username;
     }
 
-    public ArrayList<String> getList() {
-        return list;
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 }
