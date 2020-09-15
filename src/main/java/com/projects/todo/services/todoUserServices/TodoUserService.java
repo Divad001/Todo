@@ -1,4 +1,4 @@
-package com.projects.todo.services;
+package com.projects.todo.services.todoUserServices;
 
 import com.projects.todo.dtos.TodoUserDTO;
 import com.projects.todo.exceptions.todoUserExceptions.WrongPasswordException;

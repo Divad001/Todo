@@ -1,5 +1,7 @@
 package com.projects.todo.models;
 
+import java.util.ArrayList;
+import java.util.List;
 import javax.persistence.*;
 
 @Entity
@@ -7,10 +9,12 @@ public class TodoUser {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long ID;
+    protected Long ID;
     @Column(unique = true, length = 20)
-    private String username;
-    private String password;
+    protected String username;
+    protected String password;
+    @OneToMany(mappedBy = "todoUser")
+    protected List<Todo> todoList;
 
     public TodoUser() {
     }
@@ -42,5 +46,13 @@ public class TodoUser {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public List<Todo> getTodoList() {
+        return todoList;
+    }
+
+    public void setTodoList(List<Todo> todoList) {
+        this.todoList = todoList;
     }
 }

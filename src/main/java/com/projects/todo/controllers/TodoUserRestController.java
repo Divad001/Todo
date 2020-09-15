@@ -3,7 +3,7 @@ package com.projects.todo.controllers;
 import com.projects.todo.dtos.TodoUserDTO;
 import com.projects.todo.exceptions.todoUserExceptions.WrongPasswordException;
 import com.projects.todo.exceptions.todoUserExceptions.WrongUsernameException;
-import com.projects.todo.services.TodoUserService;
+import com.projects.todo.services.todoUserServices.TodoUserService;
 import com.projects.todo.utils.JwtUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

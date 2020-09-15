@@ -1,4 +1,4 @@
-package com.projects.todo.services;
+package com.projects.todo.services.todoUserServices;
 
 import com.projects.todo.models.TodoUser;
 import org.springframework.beans.factory.annotation.Autowired;

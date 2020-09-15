@@ -14,13 +14,13 @@ import org.springframework.web.bind.annotation.RestController;
 public class TodoRestController {
 
 
-  @GetMapping("/todos")
-  public ResponseEntity<?> getTodos() {
+  @GetMapping("/todos/{id}")
+  public ResponseEntity<?> getAllByUserId(@PathVariable Long id) {
     return new ResponseEntity<>(HttpStatus.OK);
   }
 
   @GetMapping("/todo/{id}")
-  public ResponseEntity<?> getTodo(@PathVariable Long id) {
+  public ResponseEntity<?> getTodoByTodoId(@PathVariable Long id) {
     return new ResponseEntity<>(HttpStatus.OK);
   }
 

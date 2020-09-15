@@ -1,6 +1,6 @@
 package com.projects.todo.filters;
 
-import com.projects.todo.services.TodoUserDetailService;
+import com.projects.todo.services.todoUserServices.TodoUserDetailService;
 import com.projects.todo.utils.JwtUtil;
 import io.jsonwebtoken.MalformedJwtException;
 import io.jsonwebtoken.SignatureException;
