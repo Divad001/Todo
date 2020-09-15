@@ -1,5 +1,7 @@
 package com.projects.todo.controllers;
 
+import com.projects.todo.dtos.TodoUserDTO;
+import com.projects.todo.exceptions.WrongUsernameException;
 import com.projects.todo.models.TodoUser;
 import com.projects.todo.services.TodoUserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,8 +22,8 @@ public class TodoRestController {
     }
 
     @PostMapping("/register")
-    public ResponseEntity<?> register(@RequestBody TodoUser todoUser) {
-        todoUserService.addUser(todoUser);
-        return new ResponseEntity<>(todoUser, HttpStatus.OK);
+    public ResponseEntity<?> register(@RequestBody TodoUserDTO todoUserDTO) throws WrongUsernameException {
+        todoUserService.checkRegister(todoUserDTO);
+        return new ResponseEntity<>(todoUserService.findByUsername(todoUserDTO.getUsername()), HttpStatus.OK);
     }
 }
