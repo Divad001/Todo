@@ -31,7 +31,7 @@ public class TodoUserServiceImpl implements TodoUserService {
   }
 
   @Override
-  public List<Todo> findAllTodoById(Long id) {
+  public List<Todo> findAllTodoByUserId(Long id) {
     return findById(id).getTodoList();
   }
 

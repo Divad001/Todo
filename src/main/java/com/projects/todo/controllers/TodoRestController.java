@@ -2,12 +2,15 @@ package com.projects.todo.controllers;
 
 import com.projects.todo.dtos.TodoDTO;
 import com.projects.todo.models.Todo;
+import com.projects.todo.models.TodoUser;
 import com.projects.todo.services.todoServices.TodoService;
 import com.projects.todo.services.todoUserServices.TodoUserService;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -29,20 +32,26 @@ public class TodoRestController {
   }
 
 
-  @GetMapping("/todos/{id}")
-  public ResponseEntity<?> getAllByUserId(@PathVariable Long id) {
-    return new ResponseEntity<>(todoUserService.findAllTodoById(id), HttpStatus.OK);
+  @GetMapping("/todos")
+  public ResponseEntity<?> getAllByUserId() {
+    return new ResponseEntity<>(todoUserService.findAllTodoByUserId(extractUser().getUserId()),
+        HttpStatus.OK);
   }
 
   @GetMapping("/todo/{id}")
   public ResponseEntity<?> getTodoByTodoId(@PathVariable Long id) {
-    Todo todo = todoService.getTodoByTodoId(id);
-    return new ResponseEntity<>(todo, HttpStatus.OK);
+    List<Todo> todoList = todoUserService.findAllTodoByUserId(extractUser().getUserId());
+    for (Todo t : todoList) {
+      if (t.getTodoId().equals(id)) {
+        return new ResponseEntity<>(t, HttpStatus.OK);
+      }
+    }
+    return new ResponseEntity<>(HttpStatus.CONFLICT);
   }
 
-  @PostMapping("/add/{id}")
-  public ResponseEntity<?> addTodo(@RequestBody TodoDTO todoDTO, @PathVariable Long id) throws Exception {
-    todoService.add(todoDTO, todoUserService.findById(id));
+  @PostMapping("/add")
+  public ResponseEntity<?> addTodo(@RequestBody TodoDTO todoDTO) throws Exception {
+    todoService.add(todoDTO, todoUserService.findById(extractUser().getUserId()));
     return new ResponseEntity<>(HttpStatus.OK);
   }
 
@@ -56,5 +65,11 @@ public class TodoRestController {
   public ResponseEntity<?> removeTodo(@PathVariable Long id) {
     todoService.remove(id);
     return new ResponseEntity<>(HttpStatus.OK);
+  }
+
+  private TodoUser extractUser() {
+    Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+    String username = authentication.getName();
+    return todoUserService.findByUsername(username);
   }
 }

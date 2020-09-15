@@ -13,7 +13,7 @@ public interface TodoUserService {
 
     TodoUser findByUsername(String username);
 
-    List<Todo> findAllTodoById(Long id);
+    List<Todo> findAllTodoByUserId(Long id);
 
     void checkRegister(TodoUserDTO todoUserDTO)
         throws WrongUsernameException, WrongPasswordException;
