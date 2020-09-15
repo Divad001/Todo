@@ -5,6 +5,7 @@ import com.projects.todo.models.Todo;
 import com.projects.todo.models.TodoUser;
 import com.projects.todo.repositories.TodoRepo;
 import com.projects.todo.repositories.TodoUserRepo;
+import com.projects.todo.services.todoUserServices.TodoUserService;
 import java.util.List;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,12 +15,12 @@ import org.springframework.stereotype.Service;
 public class TodoServiceImpl implements TodoService {
 
   private TodoRepo todoRepo;
-  private TodoUserRepo todoUserRepo;
+  private TodoUserService todoUserService;
 
   @Autowired
-  public TodoServiceImpl(TodoRepo todoRepo, TodoUserRepo todoUserRepo) {
+  public TodoServiceImpl(TodoRepo todoRepo, TodoUserService todoUserService) {
     this.todoRepo = todoRepo;
-    this.todoUserRepo = todoUserRepo;
+    this.todoUserService = todoUserService;
   }
 
   @Override
@@ -39,8 +40,14 @@ public class TodoServiceImpl implements TodoService {
   }
 
   @Override
-  public Todo getTodoByTodoId(Long id) {
-    return todoRepo.findById(id).orElse(null);
+  public Todo getTodoByTodoId(Long userId, Long id) {
+    List<Todo> todoList = todoUserService.findAllTodoByUserId(userId);
+    for (Todo t : todoList) {
+      if (t.getTodoId().equals(id)) {
+        return todoRepo.findById(id).get();
+      }
+    }
+    return null;
   }
 
   @Override

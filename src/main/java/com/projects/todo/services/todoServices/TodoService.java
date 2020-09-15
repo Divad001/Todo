@@ -11,7 +11,7 @@ public interface TodoService {
 
   List<Todo> getAll();
 
-  Todo getTodoByTodoId(Long id);
+  Todo getTodoByTodoId(Long userId, Long id);
 
   void remove(Long id);
 

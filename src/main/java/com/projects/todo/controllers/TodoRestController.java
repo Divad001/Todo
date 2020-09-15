@@ -5,7 +5,6 @@ import com.projects.todo.models.Todo;
 import com.projects.todo.models.TodoUser;
 import com.projects.todo.services.todoServices.TodoService;
 import com.projects.todo.services.todoUserServices.TodoUserService;
-import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -40,11 +39,9 @@ public class TodoRestController {
 
   @GetMapping("/todo/{id}")
   public ResponseEntity<?> getTodoByTodoId(@PathVariable Long id) {
-    List<Todo> todoList = todoUserService.findAllTodoByUserId(extractUser().getUserId());
-    for (Todo t : todoList) {
-      if (t.getTodoId().equals(id)) {
-        return new ResponseEntity<>(t, HttpStatus.OK);
-      }
+    Todo temp = todoService.getTodoByTodoId(extractUser().getUserId(), id);
+    if (temp != null) {
+      return new ResponseEntity<>(temp, HttpStatus.OK);
     }
     return new ResponseEntity<>(HttpStatus.CONFLICT);
   }
@@ -58,7 +55,8 @@ public class TodoRestController {
   @PutMapping("/complete/{id}")
   public ResponseEntity<?> completeTodo(@PathVariable Long id) {
     todoService.complete(id);
-    return new ResponseEntity<>(todoService.getTodoByTodoId(id), HttpStatus.OK);
+    return new ResponseEntity<>(todoService.getTodoByTodoId(extractUser().getUserId(), id),
+        HttpStatus.OK);
   }
 
   @DeleteMapping("/delete/{id]")
