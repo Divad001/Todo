@@ -9,12 +9,12 @@ public class TodoUser {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    protected Long ID;
+    protected Long userId;
     @Column(unique = true, length = 20)
     protected String username;
     protected String password;
-    @OneToMany(mappedBy = "todoUser")
-    protected List<Todo> todoList;
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    protected List<Todo> todoList = new ArrayList<>();
 
     public TodoUser() {
     }
@@ -24,12 +24,12 @@ public class TodoUser {
         this.password = password;
     }
 
-    public Long getID() {
-        return ID;
+    public Long getUserId() {
+        return userId;
     }
 
-    public void setID(Long ID) {
-        this.ID = ID;
+    public void setUserId(Long userId) {
+        this.userId = userId;
     }
 
     public String getUsername() {

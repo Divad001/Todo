@@ -8,5 +8,5 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface TodoRepo extends CrudRepository<Todo, Long> {
 
-  List<Todo> findAllById(Long id);
+  List<Todo> findAll();
 }

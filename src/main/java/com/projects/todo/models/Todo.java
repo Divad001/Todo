@@ -8,13 +8,14 @@ public class Todo {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    protected Long ID;
+    protected Long todoId;
     protected String content;
     @Temporal(value = TemporalType.TIMESTAMP)
     protected Date createdAt;
     protected boolean isComplete;
     @ManyToOne
-    protected TodoUser todoUser;
+    @JoinColumn(name = "user_id")
+    protected TodoUser user;
 
     public Todo() {
     }
@@ -25,12 +26,12 @@ public class Todo {
         this.isComplete = false;
     }
 
-    public Long getID() {
-        return ID;
+    public Long getTodoId() {
+        return todoId;
     }
 
-    public void setID(Long ID) {
-        this.ID = ID;
+    public void setTodoId(Long todoId) {
+        this.todoId = todoId;
     }
 
     public Date getCreatedAt() {
@@ -49,11 +50,19 @@ public class Todo {
         isComplete = complete;
     }
 
-    public TodoUser getTodoUser() {
-        return todoUser;
+    public TodoUser getUser() {
+        return user;
     }
 
-    public void setTodoUser(TodoUser todoUser) {
-        this.todoUser = todoUser;
+    public void setUser(TodoUser user) {
+        this.user = user;
+    }
+
+    public String getContent() {
+        return content;
+    }
+
+    public void setContent(String content) {
+        this.content = content;
     }
 }

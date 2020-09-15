@@ -19,6 +19,11 @@ public class TodoUserServiceImpl implements TodoUserService {
   }
 
   @Override
+  public TodoUser findById(Long id) {
+    return todoUserRepo.findById(id).orElse(null);
+  }
+
+  @Override
   public TodoUser findByUsername(String username) {
     return todoUserRepo.findByUsername(username).orElse(null);
   }
