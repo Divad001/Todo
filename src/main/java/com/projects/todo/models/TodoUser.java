@@ -3,7 +3,7 @@ package com.projects.todo.models;
 import javax.persistence.*;
 
 @Entity
-public class User {
+public class TodoUser {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -12,10 +12,10 @@ public class User {
     private String username;
     private String password;
 
-    public User() {
+    public TodoUser() {
     }
 
-    public User(String username, String password) {
+    public TodoUser(String username, String password) {
         this.username = username;
         this.password = password;
     }
