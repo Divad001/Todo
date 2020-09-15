@@ -3,8 +3,10 @@ package com.projects.todo.services.todoUserServices;
 import com.projects.todo.dtos.TodoUserDTO;
 import com.projects.todo.exceptions.todoUserExceptions.WrongPasswordException;
 import com.projects.todo.exceptions.todoUserExceptions.WrongUsernameException;
+import com.projects.todo.models.Todo;
 import com.projects.todo.models.TodoUser;
 import com.projects.todo.repositories.TodoUserRepo;
+import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -26,6 +28,11 @@ public class TodoUserServiceImpl implements TodoUserService {
   @Override
   public TodoUser findByUsername(String username) {
     return todoUserRepo.findByUsername(username).orElse(null);
+  }
+
+  @Override
+  public List<Todo> findAllTodoById(Long id) {
+    return findById(id).getTodoList();
   }
 
   @Override

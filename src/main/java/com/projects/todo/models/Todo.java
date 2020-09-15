@@ -1,5 +1,6 @@
 package com.projects.todo.models;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import javax.persistence.*;
 import java.util.Date;
 
@@ -13,6 +14,7 @@ public class Todo {
     @Temporal(value = TemporalType.TIMESTAMP)
     protected Date createdAt;
     protected boolean isComplete;
+    @JsonBackReference
     @ManyToOne
     @JoinColumn(name = "user_id")
     protected TodoUser user;

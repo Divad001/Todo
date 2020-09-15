@@ -29,9 +29,9 @@ public class TodoRestController {
   }
 
 
-  @GetMapping("/todos")
-  public ResponseEntity<?> getAllByUserId() {
-    return new ResponseEntity<>(todoService.getAll(), HttpStatus.OK);
+  @GetMapping("/todos/{id}")
+  public ResponseEntity<?> getAllByUserId(@PathVariable Long id) {
+    return new ResponseEntity<>(todoUserService.findAllTodoById(id), HttpStatus.OK);
   }
 
   @GetMapping("/todo/{id}")

@@ -1,8 +1,11 @@
 package com.projects.todo.models;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.*;
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
 
 @Entity
 public class TodoUser {
@@ -13,6 +16,7 @@ public class TodoUser {
     @Column(unique = true, length = 20)
     protected String username;
     protected String password;
+    @JsonManagedReference
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     protected List<Todo> todoList = new ArrayList<>();
 
