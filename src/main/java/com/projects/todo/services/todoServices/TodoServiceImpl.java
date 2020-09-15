@@ -1,5 +1,6 @@
 package com.projects.todo.services.todoServices;
 
+import com.projects.todo.dtos.TodoDTO;
 import com.projects.todo.models.Todo;
 import com.projects.todo.repositories.TodoRepo;
 import java.util.List;
@@ -18,8 +19,11 @@ public class TodoServiceImpl implements TodoService {
   }
 
   @Override
-  public void add(Todo todo) {
-    todoRepo.save(todo);
+  public void add(TodoDTO todoDTO) throws Exception {
+    if (todoDTO.getContent() == null || todoDTO.getContent().length() < 1) {
+      throw new Exception();
+    }
+    Todo todo = new Todo(todoDTO.getContent());
   }
 
   @Override

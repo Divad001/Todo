@@ -9,6 +9,7 @@ public class Todo {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     protected Long ID;
+    protected String content;
     @Temporal(value = TemporalType.TIMESTAMP)
     protected Date createdAt;
     protected boolean isComplete;
@@ -18,9 +19,10 @@ public class Todo {
     public Todo() {
     }
 
-    public Todo(Date createdAt, boolean isComplete) {
-        this.createdAt = createdAt;
-        this.isComplete = isComplete;
+    public Todo(String content) {
+        this.content = content;
+        this.createdAt = new Date();
+        this.isComplete = false;
     }
 
     public Long getID() {
