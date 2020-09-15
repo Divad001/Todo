@@ -1,49 +1,41 @@
 package com.projects.todo.controllers;
 
-import com.projects.todo.dtos.TodoUserDTO;
-import com.projects.todo.exceptions.todoUserExceptions.WrongPasswordException;
-import com.projects.todo.exceptions.todoUserExceptions.WrongUsernameException;
-import com.projects.todo.services.TodoUserService;
-import com.projects.todo.utils.JwtUtil;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.projects.todo.dtos.TodoDTO;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 public class TodoRestController {
 
-  private TodoUserService todoUserService;
-  private UserDetailsService userDetailsService;
-  private JwtUtil jwtUtil;
 
-  @Autowired
-  public TodoRestController(TodoUserService todoUserService,
-      UserDetailsService userDetailsService, JwtUtil jwtUtil) {
-    this.todoUserService = todoUserService;
-    this.userDetailsService = userDetailsService;
-    this.jwtUtil = jwtUtil;
+  @GetMapping("/todos")
+  public ResponseEntity<?> getTodos() {
+    return new ResponseEntity<>(HttpStatus.OK);
   }
 
-  @PostMapping("/register")
-  public ResponseEntity<?> register(@RequestBody TodoUserDTO todoUserDTO)
-      throws WrongUsernameException, WrongPasswordException {
-    todoUserService.checkRegister(todoUserDTO);
-    return new ResponseEntity<>(todoUserService.findByUsername(todoUserDTO.getUsername()),
-        HttpStatus.OK);
+  @GetMapping("/todo/{id}")
+  public ResponseEntity<?> getTodo(@PathVariable Long id) {
+    return new ResponseEntity<>(HttpStatus.OK);
   }
 
-  @PostMapping("/login")
-  public ResponseEntity<?> login(@RequestBody TodoUserDTO todoUserDTO)
-      throws WrongUsernameException, WrongPasswordException {
-    todoUserService.checkLogin(todoUserDTO);
+  @PostMapping("/add")
+  public ResponseEntity<?> addTodo(TodoDTO todoDTO) {
+    return new ResponseEntity<>(HttpStatus.OK);
+  }
 
-    final UserDetails userDetails = userDetailsService.loadUserByUsername(todoUserDTO.getUsername());
-    final String jwt = jwtUtil.generateToken(userDetails, 60);
-    return new ResponseEntity<>(jwt, HttpStatus.OK);
+  @PutMapping("/complete/{id}")
+  public ResponseEntity<?> completeTodo(@PathVariable Long id) {
+    return new ResponseEntity<>(HttpStatus.OK);
+  }
+
+  @DeleteMapping("/delete/{id]")
+  public ResponseEntity<?> removeTodo(@PathVariable Long id) {
+    return new ResponseEntity<>(HttpStatus.OK);
   }
 }
