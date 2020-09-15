@@ -24,6 +24,7 @@ public class TodoServiceImpl implements TodoService {
       throw new Exception();
     }
     Todo todo = new Todo(todoDTO.getContent());
+    todoRepo.save(todo);
   }
 
   @Override
