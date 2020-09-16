@@ -9,13 +9,11 @@ public interface TodoService {
 
   void add(TodoDTO todoDTO, TodoUser todoUser) throws Exception;
 
-  List<Todo> getAll();
-
   Todo getTodoByTodoId(Long userId, Long id);
 
-  void complete(Long id);
+  void complete(Long userId, Long id);
 
-  void inComplete(Long id);
+  void inComplete(Long userId, Long id);
 
-  void remove(Long id);
+  void remove(Long userId, Long id);
 }

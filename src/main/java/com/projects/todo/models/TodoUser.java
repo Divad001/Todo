@@ -17,7 +17,7 @@ public class TodoUser {
     protected String username;
     protected String password;
     @JsonManagedReference
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     protected List<Todo> todoList = new ArrayList<>();
 
     public TodoUser() {

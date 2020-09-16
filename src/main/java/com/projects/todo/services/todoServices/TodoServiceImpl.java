@@ -6,6 +6,7 @@ import com.projects.todo.models.TodoUser;
 import com.projects.todo.repositories.TodoRepo;
 import com.projects.todo.repositories.TodoUserRepo;
 import com.projects.todo.services.todoUserServices.TodoUserService;
+import com.sun.xml.bind.v2.TODO;
 import java.util.List;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,35 +36,42 @@ public class TodoServiceImpl implements TodoService {
   }
 
   @Override
-  public List<Todo> getAll() {
-    return todoRepo.findAll();
+  public Todo getTodoByTodoId(Long userId, Long id) {
+    return checkUserTodoList(userId, id);
   }
 
   @Override
-  public Todo getTodoByTodoId(Long userId, Long id) {
+  public void complete(Long userId, Long id) {
+    Todo temp = checkUserTodoList(userId, id);
+    if (temp != null) {
+      temp.setComplete(true);
+      todoRepo.save(temp);
+    }
+  }
+
+  @Override
+  public void inComplete(Long userId, Long id) {
+    Todo temp = checkUserTodoList(userId, id);
+    if (temp != null) {
+      temp.setComplete(false);
+      todoRepo.save(temp);
+    }
+  }
+
+  @Override
+  public void remove(Long userId, Long id) {
+    if (checkUserTodoList(userId, id) != null) {
+      todoRepo.deleteById(id);
+    }
+  }
+
+  private Todo checkUserTodoList(Long userId, Long id) {
     List<Todo> todoList = todoUserService.findAllTodoByUserId(userId);
     for (Todo t : todoList) {
       if (t.getTodoId().equals(id)) {
-        return todoRepo.findById(id).get();
+        return t;
       }
     }
     return null;
-  }
-
-  @Override
-  public void complete(Long id) {
-    Optional<Todo> temp = todoRepo.findById(id);
-    temp.ifPresent(todo -> todo.setComplete(true));
-  }
-
-  @Override
-  public void inComplete(Long id) {
-    Optional<Todo> temp = todoRepo.findById(id);
-    temp.ifPresent(todo -> todo.setComplete(false));
-  }
-
-  @Override
-  public void remove(Long id) {
-    todoRepo.deleteById(id);
   }
 }
