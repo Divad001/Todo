@@ -2,9 +2,9 @@ package com.projects.todo.exceptions.todoUserExceptions;
 
 import com.projects.todo.models.ErrorMessage;
 
-public class WrongPasswordException extends TodoUserException {
+public class InvalidUsername extends TodoUserException{
 
-  public WrongPasswordException(String parameters) {
+  public InvalidUsername(String parameters) {
     this.parameters = parameters;
   }
 

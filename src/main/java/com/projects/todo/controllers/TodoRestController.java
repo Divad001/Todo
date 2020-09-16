@@ -5,7 +5,6 @@ import com.projects.todo.models.Todo;
 import com.projects.todo.models.TodoUser;
 import com.projects.todo.services.todoServices.TodoService;
 import com.projects.todo.services.todoUserServices.TodoUserService;
-import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

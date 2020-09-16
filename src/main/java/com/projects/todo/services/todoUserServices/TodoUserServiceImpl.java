@@ -1,6 +1,9 @@
 package com.projects.todo.services.todoUserServices;
 
 import com.projects.todo.dtos.TodoUserDTO;
+import com.projects.todo.exceptions.todoUserExceptions.InvalidPassword;
+import com.projects.todo.exceptions.todoUserExceptions.InvalidUsername;
+import com.projects.todo.exceptions.todoUserExceptions.UsernameAlreadyTaken;
 import com.projects.todo.exceptions.todoUserExceptions.WrongPasswordException;
 import com.projects.todo.exceptions.todoUserExceptions.WrongUsernameException;
 import com.projects.todo.models.Todo;
@@ -37,8 +40,8 @@ public class TodoUserServiceImpl implements TodoUserService {
 
   @Override
   public void checkRegister(TodoUserDTO todoUserDTO)
-      throws WrongUsernameException, WrongPasswordException {
-    isTodoUserDTOUsernameAndPasswordValid(todoUserDTO);
+      throws UsernameAlreadyTaken, InvalidUsername, InvalidPassword {
+    checkRegisterCredentialsInput(todoUserDTO);
     TodoUser todoUser = new TodoUser(todoUserDTO.getUsername(), todoUserDTO.getPassword());
     addUser(todoUser);
   }
@@ -46,8 +49,8 @@ public class TodoUserServiceImpl implements TodoUserService {
 
   @Override
   public void checkLogin(TodoUserDTO todoUserDTO)
-      throws WrongUsernameException, WrongPasswordException {
-    isTodoUserDTOUsernameAndPasswordValid(todoUserDTO);
+      throws WrongPasswordException, WrongUsernameException {
+    checkLoginCredentialsInput(todoUserDTO);
   }
 
   @Override
@@ -55,13 +58,31 @@ public class TodoUserServiceImpl implements TodoUserService {
     todoUserRepo.save(todoUser);
   }
 
-  private void isTodoUserDTOUsernameAndPasswordValid(TodoUserDTO todoUserDTO)
-      throws WrongUsernameException, WrongPasswordException {
-    if (todoUserDTO.getUsername() == null || todoUserDTO.getUsername().length() < 1) {
-     throw new WrongUsernameException(todoUserDTO.getUsername());
+  private void checkRegisterCredentialsInput(
+      TodoUserDTO todoUserDTO)
+      throws UsernameAlreadyTaken, InvalidUsername, InvalidPassword {
+    if (todoUserDTO.getUsername() == null || todoUserDTO.getUsername().length() < 5) {
+      throw new InvalidUsername("Invalid username: '" + todoUserDTO.getUsername()
+          + "' . Username must contain at least 5 characters");
+    } else if (todoUserRepo.findByUsername(todoUserDTO.getUsername()).isPresent()) {
+      throw new UsernameAlreadyTaken(
+          "Username: '" + todoUserDTO.getUsername() + "' is already taken");
     }
-    if (todoUserDTO.getPassword() == null || todoUserDTO.getPassword().length() < 1) {
-      throw new WrongPasswordException(todoUserDTO.getPassword());
+    if (todoUserDTO.getPassword() == null || todoUserDTO.getPassword().length() < 5) {
+      throw new InvalidPassword(
+          "Password must contain at least 5 characters.");
+    }
+  }
+
+  private void checkLoginCredentialsInput(TodoUserDTO todoUserDTO)
+      throws WrongUsernameException, WrongPasswordException {
+    if (todoUserDTO.getUsername() == null
+        || todoUserRepo.findByUsername(todoUserDTO.getUsername()).isEmpty()) {
+      throw new WrongUsernameException(
+          "Username: '" + todoUserDTO.getUsername() + "' does not exist.");
+    } else if (!todoUserRepo.findByUsername(todoUserDTO.getUsername()).get().getPassword()
+        .equals(todoUserDTO.getPassword())) {
+      throw new WrongPasswordException("Wrong password");
     }
   }
 }

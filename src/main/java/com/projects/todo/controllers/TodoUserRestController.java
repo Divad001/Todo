@@ -1,6 +1,9 @@
 package com.projects.todo.controllers;
 
 import com.projects.todo.dtos.TodoUserDTO;
+import com.projects.todo.exceptions.todoUserExceptions.InvalidPassword;
+import com.projects.todo.exceptions.todoUserExceptions.InvalidUsername;
+import com.projects.todo.exceptions.todoUserExceptions.UsernameAlreadyTaken;
 import com.projects.todo.exceptions.todoUserExceptions.WrongPasswordException;
 import com.projects.todo.exceptions.todoUserExceptions.WrongUsernameException;
 import com.projects.todo.services.todoUserServices.TodoUserService;
@@ -31,7 +34,7 @@ public class TodoUserRestController {
 
   @PostMapping("/register")
   public ResponseEntity<?> register(@RequestBody TodoUserDTO todoUserDTO)
-      throws WrongUsernameException, WrongPasswordException {
+      throws WrongUsernameException, WrongPasswordException, InvalidPassword, UsernameAlreadyTaken, InvalidUsername {
     todoUserService.checkRegister(todoUserDTO);
     return new ResponseEntity<>(todoUserService.findByUsername(todoUserDTO.getUsername()),
         HttpStatus.OK);
@@ -39,7 +42,7 @@ public class TodoUserRestController {
 
   @PostMapping("/login")
   public ResponseEntity<?> login(@RequestBody TodoUserDTO todoUserDTO)
-      throws WrongUsernameException, WrongPasswordException {
+      throws WrongUsernameException, WrongPasswordException, UsernameAlreadyTaken, InvalidUsername {
     todoUserService.checkLogin(todoUserDTO);
 
     final UserDetails userDetails = userDetailsService.loadUserByUsername(todoUserDTO.getUsername());
