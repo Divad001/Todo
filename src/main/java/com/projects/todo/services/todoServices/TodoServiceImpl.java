@@ -51,13 +51,19 @@ public class TodoServiceImpl implements TodoService {
   }
 
   @Override
-  public void remove(Long id) {
-    todoRepo.deleteById(id);
-  }
-
-  @Override
   public void complete(Long id) {
     Optional<Todo> temp = todoRepo.findById(id);
     temp.ifPresent(todo -> todo.setComplete(true));
+  }
+
+  @Override
+  public void inComplete(Long id) {
+    Optional<Todo> temp = todoRepo.findById(id);
+    temp.ifPresent(todo -> todo.setComplete(false));
+  }
+
+  @Override
+  public void remove(Long id) {
+    todoRepo.deleteById(id);
   }
 }

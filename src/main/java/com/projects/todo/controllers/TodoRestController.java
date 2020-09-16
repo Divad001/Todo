@@ -59,6 +59,12 @@ public class TodoRestController {
         HttpStatus.OK);
   }
 
+  @PostMapping("/incomplete/{id}")
+  public ResponseEntity<?> inComplete(@PathVariable Long id) {
+    todoService.inComplete(id);
+    return new ResponseEntity<>(todoService.getTodoByTodoId(extractUser().getUserId(), id), HttpStatus.OK);
+  }
+
   @DeleteMapping("/delete/{id]")
   public ResponseEntity<?> removeTodo(@PathVariable Long id) {
     todoService.remove(id);

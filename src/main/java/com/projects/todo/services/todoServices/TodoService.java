@@ -13,7 +13,9 @@ public interface TodoService {
 
   Todo getTodoByTodoId(Long userId, Long id);
 
-  void remove(Long id);
-
   void complete(Long id);
+
+  void inComplete(Long id);
+
+  void remove(Long id);
 }
