@@ -1,6 +1,7 @@
 package com.projects.todo.controllers;
 
 import com.projects.todo.dtos.TodoDTO;
+import com.projects.todo.exceptions.todoExceptions.WrongTodoIdException;
 import com.projects.todo.models.Todo;
 import com.projects.todo.models.TodoUser;
 import com.projects.todo.services.todoServices.TodoService;
@@ -38,7 +39,7 @@ public class TodoRestController {
   }
 
   @GetMapping("/todo/{id}")
-  public ResponseEntity<?> getTodoByTodoId(@PathVariable Long id) {
+  public ResponseEntity<?> getTodoByTodoId(@PathVariable Long id) throws WrongTodoIdException {
     Todo temp = todoService.getTodoByTodoId(extractUser().getUserId(), id);
     if (temp != null) {
       return new ResponseEntity<>(temp, HttpStatus.OK);
@@ -48,27 +49,32 @@ public class TodoRestController {
 
   @PostMapping("/add")
   public ResponseEntity<?> addTodo(@RequestBody TodoDTO todoDTO) throws Exception {
-    todoService.add(todoDTO, todoUserService.findById(extractUser().getUserId()));
-    return new ResponseEntity<>(HttpStatus.OK);
+    Todo todo = todoService.add(todoDTO, todoUserService.findById(extractUser().getUserId()));
+    return new ResponseEntity<>("Todo: '" + todo.getContent() + "' has been added.", HttpStatus.OK);
   }
 
   @PutMapping("/complete/{id}")
-  public ResponseEntity<?> completeTodo(@PathVariable Long id) {
+  public ResponseEntity<?> completeTodo(@PathVariable Long id) throws WrongTodoIdException {
     todoService.complete(extractUser().getUserId(), id);
-    return new ResponseEntity<>(todoService.getTodoByTodoId(extractUser().getUserId(), id),
+    Todo todo = todoService.getTodoByTodoId(extractUser().getUserId(), id);
+    return new ResponseEntity<>(
+        "Todo: '" + todo.getContent() + "' status has been set to completed.",
         HttpStatus.OK);
   }
 
   @PutMapping("/incomplete/{id}")
-  public ResponseEntity<?> inComplete(@PathVariable Long id) {
+  public ResponseEntity<?> inComplete(@PathVariable Long id) throws WrongTodoIdException {
     todoService.inComplete(extractUser().getUserId(), id);
-    return new ResponseEntity<>(todoService.getTodoByTodoId(extractUser().getUserId(), id), HttpStatus.OK);
+    Todo todo = todoService.getTodoByTodoId(extractUser().getUserId(), id);
+    return new ResponseEntity<>(
+        "Todo: '" + todo.getContent() + "' status has been set to uncompleted.", HttpStatus.OK);
   }
 
   @DeleteMapping("/remove/{id}")
-  public ResponseEntity<?> removeTodo(@PathVariable Long id) {
-    todoService.remove(extractUser().getUserId(), id);
-    return new ResponseEntity<>(HttpStatus.OK);
+  public ResponseEntity<?> removeTodo(@PathVariable Long id) throws WrongTodoIdException {
+    Todo temp = todoService.remove(extractUser().getUserId(), id);
+    return new ResponseEntity<>("Todo: '" + temp.getContent() + "' has been deleted.",
+        HttpStatus.OK);
   }
 
   private TodoUser extractUser() {

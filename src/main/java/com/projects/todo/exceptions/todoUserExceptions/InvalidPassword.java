@@ -5,7 +5,7 @@ import com.projects.todo.models.ErrorMessage;
 public class InvalidPassword extends TodoUserException {
 
   public InvalidPassword(String parameters) {
-    this.parameters = parameters;
+    super(parameters);
   }
 
   @Override

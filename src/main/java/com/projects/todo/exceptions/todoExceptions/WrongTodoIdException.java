@@ -1,10 +1,10 @@
-package com.projects.todo.exceptions.todoUserExceptions;
+package com.projects.todo.exceptions.todoExceptions;
 
 import com.projects.todo.models.ErrorMessage;
 
-public class WrongUsernameException extends TodoUserException {
+public class WrongTodoIdException extends TodoException {
 
-  public WrongUsernameException(String parameters) {
+  public WrongTodoIdException(String parameters) {
     super(parameters);
   }
 

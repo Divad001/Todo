@@ -5,7 +5,7 @@ import com.projects.todo.models.ErrorMessage;
 public class UsernameAlreadyTaken extends TodoUserException {
 
   public UsernameAlreadyTaken(String parameters) {
-    this.parameters = parameters;
+    super(parameters);
   }
 
   @Override

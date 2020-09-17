@@ -1,12 +1,12 @@
-package com.projects.todo.exceptions.todoUserExceptions;
+package com.projects.todo.exceptions.todoExceptions;
 
 import com.projects.todo.models.ErrorMessage;
 
-public abstract class TodoUserException extends Exception {
+public abstract class TodoException extends Exception{
 
   protected String parameters;
 
-  public TodoUserException(String parameters) {
+  public TodoException(String parameters) {
     this.parameters = parameters;
   }
 

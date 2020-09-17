@@ -63,10 +63,10 @@ public class TodoUserServiceImpl implements TodoUserService {
       throws UsernameAlreadyTaken, InvalidUsername, InvalidPassword {
     if (todoUserDTO.getUsername() == null || todoUserDTO.getUsername().length() < 5) {
       throw new InvalidUsername("Invalid username: '" + todoUserDTO.getUsername()
-          + "' . Username must contain at least 5 characters");
+          + "' . Username must contain at least 5 characters.");
     } else if (todoUserRepo.findByUsername(todoUserDTO.getUsername()).isPresent()) {
       throw new UsernameAlreadyTaken(
-          "Username: '" + todoUserDTO.getUsername() + "' is already taken");
+          "Username: '" + todoUserDTO.getUsername() + "' is already taken.");
     }
     if (todoUserDTO.getPassword() == null || todoUserDTO.getPassword().length() < 5) {
       throw new InvalidPassword(
@@ -82,7 +82,7 @@ public class TodoUserServiceImpl implements TodoUserService {
           "Username: '" + todoUserDTO.getUsername() + "' does not exist.");
     } else if (!todoUserRepo.findByUsername(todoUserDTO.getUsername()).get().getPassword()
         .equals(todoUserDTO.getPassword())) {
-      throw new WrongPasswordException("Wrong password");
+      throw new WrongPasswordException("Wrong password.");
     }
   }
 }
