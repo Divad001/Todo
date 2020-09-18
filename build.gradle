@@ -4,9 +4,15 @@ plugins {
 	id 'java'
 }
 
+apply plugin: 'checkstyle'
+
 group = 'com.projects'
 version = '0.0.1-SNAPSHOT'
 sourceCompatibility = '11'
+
+checkstyle {
+	toolVersion "8.18"
+}
 
 repositories {
 	mavenCentral()
