@@ -1,0 +1,40 @@
+version: 2
+jobs:
+  build:
+    working_directory: ~/repo
+
+    docker:
+      - image: circleci/openjdk:11-jdk
+
+    environment:
+      JVM_OPTS: -Xmx3200m
+      TERM: dumb
+
+    steps:
+      - checkout
+
+      - restore_cache:
+          keys:
+            - v1-dependencies-{{ checksum "build.gradle" }}
+            # fallback to using the latest cache if no exact match is found
+            - v1-dependencies-
+
+      - save_cache:
+          key: v1-gradle-wrapper-{{ checksum "gradle/wrapper/gradle-wrapper.properties" }}
+          paths:
+            - ~/.gradle/wrapper
+      - save_cache:
+          paths:
+            - ~/.gradle
+          key: v1-dependencies-{{ checksum "build.gradle" }}
+
+
+      - run: gradle checkstyleMain
+      - run: gradle checkstyleTest
+      - run: gradle build -x test -x checkstyleMain -x checkStyleTest
+      #      - run: gradle test
+      #      - run: gradle jacocoTestCoverageVerification
+      #      - run: gradle jacocoTestReport
+
+      - store_artifacts:
+          path:  build/jacoco
