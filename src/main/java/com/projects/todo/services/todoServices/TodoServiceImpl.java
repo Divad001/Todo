@@ -67,6 +67,7 @@ public class TodoServiceImpl implements TodoService {
         return t;
       }
     }
-    throw new WrongTodoIdException("Todo ID: '" + id.toString() + "' does not exist in your Todo List.");
+    throw new WrongTodoIdException(
+      "Todo ID: '" + id.toString() + "' does not exist in your Todo List.");
   }
 }

@@ -12,16 +12,16 @@ import java.util.ArrayList;
 @Service
 public class TodoUserDetailService implements UserDetailsService {
 
-    private TodoUserService todoUserService;
+  private TodoUserService todoUserService;
 
-    @Autowired
-    public TodoUserDetailService(TodoUserService todoUserService) {
-        this.todoUserService = todoUserService;
-    }
+  @Autowired
+  public TodoUserDetailService(TodoUserService todoUserService) {
+    this.todoUserService = todoUserService;
+  }
 
-    @Override
-    public UserDetails loadUserByUsername(String username) {
-        TodoUser temp = todoUserService.findByUsername(username);
-        return new User(username, temp.getPassword(), new ArrayList<>());
-    }
+  @Override
+  public UserDetails loadUserByUsername(String username) {
+    TodoUser temp = todoUserService.findByUsername(username);
+    return new User(username, temp.getPassword(), new ArrayList<>());
+  }
 }

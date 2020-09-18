@@ -45,7 +45,8 @@ public class TodoUserRestController {
       throws WrongUsernameException, WrongPasswordException, UsernameAlreadyTaken, InvalidUsername {
     todoUserService.checkLogin(todoUserDTO);
 
-    final UserDetails userDetails = userDetailsService.loadUserByUsername(todoUserDTO.getUsername());
+    final UserDetails userDetails = userDetailsService
+        .loadUserByUsername(todoUserDTO.getUsername());
     final String jwt = jwtUtil.generateToken(userDetails, 60);
     return new ResponseEntity<>(jwt, HttpStatus.OK);
   }

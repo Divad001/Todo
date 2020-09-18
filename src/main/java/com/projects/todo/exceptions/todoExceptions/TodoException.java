@@ -2,7 +2,7 @@ package com.projects.todo.exceptions.todoExceptions;
 
 import com.projects.todo.models.ErrorMessage;
 
-public abstract class TodoException extends Exception{
+public abstract class TodoException extends Exception {
 
   protected String parameters;
 

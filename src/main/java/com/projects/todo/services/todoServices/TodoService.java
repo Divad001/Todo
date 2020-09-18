@@ -4,7 +4,6 @@ import com.projects.todo.dtos.TodoDTO;
 import com.projects.todo.exceptions.todoExceptions.WrongTodoIdException;
 import com.projects.todo.models.Todo;
 import com.projects.todo.models.TodoUser;
-import java.util.List;
 
 public interface TodoService {
 
