@@ -2,7 +2,7 @@ package com.projects.todo.exceptions.todoUserExceptions;
 
 import com.projects.todo.models.ErrorMessage;
 
-public class InvalidUsername extends TodoUserException{
+public class InvalidUsername extends TodoUserException {
 
   public InvalidUsername(String parameters) {
     super(parameters);

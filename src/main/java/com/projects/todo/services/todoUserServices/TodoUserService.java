@@ -12,17 +12,17 @@ import java.util.List;
 
 public interface TodoUserService {
 
-    TodoUser findById(Long id);
+  TodoUser findById(Long id);
 
-    TodoUser findByUsername(String username);
+  TodoUser findByUsername(String username);
 
-    List<Todo> findAllTodoByUserId(Long id);
+  List<Todo> findAllTodoByUserId(Long id);
 
-    void checkRegister(TodoUserDTO todoUserDTO)
-        throws WrongUsernameException, WrongPasswordException, UsernameAlreadyTaken, InvalidUsername, InvalidPassword;
+  void checkRegister(TodoUserDTO todoUserDTO)
+      throws WrongUsernameException, WrongPasswordException, UsernameAlreadyTaken, InvalidUsername, InvalidPassword;
 
-    void checkLogin(TodoUserDTO todoUserDTO)
-        throws WrongUsernameException, WrongPasswordException, UsernameAlreadyTaken, InvalidUsername;
+  void checkLogin(TodoUserDTO todoUserDTO)
+      throws WrongUsernameException, WrongPasswordException, UsernameAlreadyTaken, InvalidUsername;
 
-    void addUser(TodoUser todoUser);
+  void addUser(TodoUser todoUser);
 }
